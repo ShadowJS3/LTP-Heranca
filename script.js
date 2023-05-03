@@ -8,12 +8,9 @@ class Produto{
     this.preco = preco
     }
     mostrarProduto(){
-        return this.nome + " " + this.dataCadastro + " " + this.descricao + " " + this.preco
+        // return this.nome + " " + this.dataCadastro + " " + this.descricao + " " + this.preco
     }
 }
-
-const produto = new Produto("IFCorporation","17-02-2007","Vendinha da Esquina", 10000000)
-console.log(produto.mostrarProduto())
 
 class ProdutoDestaque extends Produto {
     constructor(nome, dataCadastro, descricao,preco,imagemDestaque){
@@ -21,9 +18,16 @@ class ProdutoDestaque extends Produto {
     this.imagemDestaque = imagemDestaque
     }
     mostrarProdutoDestaque(){
-        return this.nome + " " + this.dataCadastro + " " + this.descricao + " " + this.preco + " " + this.imagemDestaque
+        return `
+            <h1>${this.nome}</h1>
+            <div>${this.dataCadastro}</div>
+            <p>${this.descricao}</p>
+        `
+        // return this.nome + " " + this.dataCadastro + " " + this.descricao + " " + this.preco + " " + this.imagemDestaque
     }
 }
 
-const produtodestaque = new ProdutoDestaque("IFCorporation","17-02-2007","Vendinha da Esquina", 10000000,"logo.png")
-console.log(produtodestaque.mostrarProdutoDestaque())
+const produto = new ProdutoDestaque("Banana","17-02-2023","Fruta", 10000000,"MinionBanana.png")
+
+const ProdutoDestaque = document.getElementById("produto-destaque")
+produtoDestaque.insertAdjacentHTML('afterbegin', produto.mostrarProdutoDestaque())
