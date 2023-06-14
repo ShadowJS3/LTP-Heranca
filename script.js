@@ -1,16 +1,35 @@
+class MeuErro extends Error {
+  constructor(message){
+    super(message);
+    this.name = "Meu Erro";
+  }
+}
+
 class Produto {
     constructor (nome, datadeCadastro, descricao, preco){
-    this.nome = nome
-    this.datadeCadastro = datadeCadastro
-    this.descricao = descricao
-    this.preco = preco
+      this.nome = nome
+      this.datadeCadastro = datadeCadastro
+      this.descricao = descricao
+      this.preco = preco
+    }
+
+  mostrarProduto{
+    try {
+      return this.montarProdutos()
+    } catch (error) {
+      console.log(error)
+    }
   }
-  mostrarProdutos (){
-    return this.nome + this.datadeCadastro + this.descricao + this.preco 
-  }
+
+  montarProdutos (){
+    if (this.nome != "" && this.datadeCadastro != "" && this.descricao != "" && this.preco != ""){
+      return this.nome + this.datadeCadastro + this.descricao + this.preco 
+    }else{
+      throw new MeuErro("esta faltando atributos")
+    }
   }
   
-  const produto = new Produto("Boneca", "16/02/2007", "Relógio Masculino", "R$ 100,00")
+  const produto = new Produto("Relogio", "16/02/2007", "Relógio Masculino", "R$ 100,00")
   console.log(produto.mostrarProdutos())
   
   class ProdutosDestaque extends Produto{
@@ -18,7 +37,18 @@ class Produto {
       super(nome, datadeCadastro, descricao, preco, imagemDestaque)
       this.imagemDestaque = imagemDestaque
     }
-    mostrarProdutosDestaque (){
+
+    mostrarProdutosDestaque(){
+      try {
+      return this.montarProdutosDestaque()
+    } catch (error) {
+      console.log(error)
+    }
+  } 
+    }
+
+    montarProdutosDestaque(){
+      if (this.nome != "" && this.datadeCadastro != "" && this.descricao != "" && this.preco != ""){
         return `
         <h1 class = "bela" >${this.nome}</h1>
         <h4> ${this.datadeCadastro}</h4>
@@ -28,7 +58,11 @@ class Produto {
         ` 
        // return this.nome + this.datadeCadastro + this.descricao + this.preco + this.imagemDestaque
      }
-  }   
+    } else{
+      throw new MeuErro("esta faltando atributos")
+    }
+  }
+
   const produtosDestaque = new ProdutosDestaque("Relogio", "16/02/2007", "Relógio Masculino", "R$ 100,00", "https://http2.mlstatic.com/relogio-masculino-naviforce-militar-esportivo-pulseira-couro-D_NQ_NP_651401-MLB27925078333_082018-F.jpg");
   //console.log(produtosDestaque.mostrarProdutosDestaque())
   
@@ -51,7 +85,9 @@ class Produto {
       this.descricao4 = descricao4
       this.preco4 = preco4
     }
-  mostrarListaProdutos() {
+
+  montarListaProdutos() {
+     if (this.nome != "" && this.datadeCadastro != "" && this.descricao != "" && this.preco != ""){
     return `
       
       <div class="listinha">
@@ -74,6 +110,9 @@ class Produto {
     </div>
   </div>
     `;
+  }else{
+      throw new MeuErro("esta faltando atributos")
+    }
   }
   }
   
