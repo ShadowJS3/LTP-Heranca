@@ -1,123 +1,126 @@
-class MeuErro extends Error {
-  constructor(message){
+class MeuError extends Error {
+  constructor(message) {
     super(message);
-    this.name = "Meu Erro";
+    this.name = "Erro nos atributos!";
   }
 }
 
-class Produto {
-    constructor (nome, datadeCadastro, descricao, preco){
-      this.nome = nome
-      this.datadeCadastro = datadeCadastro
-      this.descricao = descricao
-      this.preco = preco
-    }
+class Produtos {
+  constructor(nome, dataDeCadastro, descricao, preco) {
+    this.nome = nome;
+    this.dataDeCadastro = dataDeCadastro;
+    this.descricao = descricao;
+    this.preco = preco;
+  }
 
-  mostrarProduto{
+  mostrarAtributos() {
     try {
-      return this.montarProdutos()
+      return this.mostrarDadosDestaque();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  montarProdutos (){
-    if (this.nome != "" && this.datadeCadastro != "" && this.descricao != "" && this.preco != ""){
-      return this.nome + this.datadeCadastro + this.descricao + this.preco 
-    }else{
-      throw new MeuErro("esta faltando atributos")
+  mostrarDadosDestaque() {
+    if (
+      this.nome !== "" &&
+      this.descricao !== "" &&
+      this.preco !== "" &&
+      this.dataDeCadastro !== ""
+    ) {
+      return `
+    <div class="produto-padrao">
+    <h1>${this.nome}</h1>
+    <br>
+    <div>${this.descricao}</div>
+    <h3>Preço: ${this.preco},00</h3>
+    <p>${this.dataDeCadastro}</p> 
+    </div>`;
+    } else {
+      throw new MeuError("Algum campo faltando");
     }
   }
-  
-  const produto = new Produto("Relogio", "16/02/2007", "Relógio Masculino", "R$ 100,00")
-  console.log(produto.mostrarProdutos())
-  
-  class ProdutosDestaque extends Produto{
-    constructor (nome, datadeCadastro, descricao,  preco, imagemDestaque){
-      super(nome, datadeCadastro, descricao, preco, imagemDestaque)
-      this.imagemDestaque = imagemDestaque
-    }
+}
 
-    mostrarProdutosDestaque(){
-      try {
-      return this.montarProdutosDestaque()
+class ProdutoDestaque extends Produtos {
+  constructor(nome, dataDeCadastro, descricao, preco, imagem) {
+    super(nome, dataDeCadastro, descricao, preco);
+    this.imagem = imagem;
+  }
+
+  mostrarAtributosDestaque() {
+    try {
+      return this.mostrarDados();
     } catch (error) {
-      console.log(error)
-    }
-  } 
-    }
-
-    montarProdutosDestaque(){
-      if (this.nome != "" && this.datadeCadastro != "" && this.descricao != "" && this.preco != ""){
-        return `
-        <h1 class = "bela" >${this.nome}</h1>
-        <h4> ${this.datadeCadastro}</h4>
-        <img src="${this.imagemDestaque}" style="height: 250px"/>
-        <p> ${this.descricao}</p>
-        <p> ${this.preco}</p>
-        ` 
-       // return this.nome + this.datadeCadastro + this.descricao + this.preco + this.imagemDestaque
-     }
-    } else{
-      throw new MeuErro("esta faltando atributos")
+      console.log(error);
     }
   }
 
-  const produtosDestaque = new ProdutosDestaque("Relogio", "16/02/2007", "Relógio Masculino", "R$ 100,00", "https://http2.mlstatic.com/relogio-masculino-naviforce-militar-esportivo-pulseira-couro-D_NQ_NP_651401-MLB27925078333_082018-F.jpg");
-  //console.log(produtosDestaque.mostrarProdutosDestaque())
-  
-  
-  const produtos = document.getElementById("produto-destaque")
-  produtos.insertAdjacentHTML('afterbegin', produtosDestaque.mostrarProdutosDestaque());
-  
-  
-  class ProdutosdaLista extends Produto{
-    constructor (nome, datadeCadastro, descricao,  preco, imagemDestaque, nome2, descricao2, preco2, nome3, descricao3, preco3, nome4, descricao4, preco4){
-      super(nome, datadeCadastro, descricao, preco, imagemDestaque, nome2, descricao2, preco2, nome3, descricao3, preco3, nome4, descricao4, preco4)
-      this.imagemDestaque = imagemDestaque
-      this.nome2 = nome2
-      this.descricao2 = descricao2
-      this.preco2 = preco2
-      this.nome3 = nome3
-      this.descricao3 = descricao3
-      this.preco3 = preco3
-      this.nome4 = nome4
-      this.descricao4 = descricao4
-      this.preco4 = preco4
+  mostrarDados() {
+    if (
+      this.nome !== "" &&
+      this.descricao !== "" &&
+      this.preco !== "" &&
+      this.dataDeCadastro !== "" &&
+      this.imagem !== ""
+    ) {
+      return `
+        <div class="produto-destaque">
+        <h1>${this.nome}</h1>
+        <img src="${this.imagem}">
+        <div>${this.descricao}</div>
+        <h3>Preço: ${this.preco},50</h3>
+        <p>${this.dataDeCadastro}</p>
+        </div> `;
+    } else {
+      throw new MeuError("Algum campo no produto destaque");
     }
+  }
+}
 
-  montarListaProdutos() {
-     if (this.nome != "" && this.datadeCadastro != "" && this.descricao != "" && this.preco != ""){
-    return `
-      
-      <div class="listinha">
-    <div class="grid-container">
-      <div class="coluna">
-      <h4>${this.nome2}</h4>
-      <p>${this.descricao2}</p>
-      <p>${this.preco2}</p>
-      </div>
-      <div class="coluna">
-      <h4>${this.nome3}</h4>
-      <p>${this.descricao3}</p>
-      <p>${this.preco3}</p>
-      </div>
-      <div class="coluna">
-      <h4>${this.nome4}</h4>
-      <p>${this.descricao4}</p>
-      <p>${this.preco4}</p>
-      </div>
-    </div>
-  </div>
-    `;
-  }else{
-      throw new MeuErro("esta faltando atributos")
-    }
-  }
-  }
-  
-  const produtosLIsta = new ProdutosdaLista("Relogio", "16-02-2007", "Relogio Masculino", "R$ 100,00", "https://http2.mlstatic.com/relogio-masculino-naviforce-militar-esportivo-pulseira-couro-D_NQ_NP_651401-MLB27925078333_082018-F.jpg", "Relogio Feminino", "Relogio Feminino - Esportivo", "R$ 99,99", "Relogio de Corrida", "Relogio de corrida - Masculino", "R$ 200,99", "Relogio Casual", "Unissex", "R$ 89,99");
-  
-  const listaProdutos = document.getElementById("lista-produtos")
-  listaProdutos.insertAdjacentHTML('afterbegin', produtosLIsta.mostrarListaProdutos());
-  
+const produto = new Produtos(
+  "Faca Butterfly",
+  "16/05/2021",
+  "Faca para manobras e decoração",
+  100
+);
+const produto2 = new Produtos(
+  "Faca M9",
+  "02/05/2023",
+  "Faca para manobras e decoração",
+  50
+);
+const produto3 = new Produtos(
+  "Canivete",
+  "20/2/2020",
+  "Faca para o uso diário",
+  30
+);
+const produtoDestaque = new ProdutoDestaque(
+  "Faca Karambit",
+  "22/08/2023",
+  "Faca para manobras e decoração",
+  500,
+  "https://tse2.mm.bing.net/th?id=OIP.XiRRSVq6y_NOR_GluMymrgHaE8&pid=Api&P=0&h=180"
+);
+console.log(produto.mostrarDadosDestaque());
+console.log(produto2.mostrarDadosDestaque());
+console.log(produtoDestaque.mostrarDados());
+
+const produtoBasico = document.getElementById("lista-produtos");
+produtoBasico.insertAdjacentHTML("afterbegin", produto.mostrarDadosDestaque());
+const produtosBasico2 = document.getElementById("lista-produtos");
+produtosBasico2.insertAdjacentHTML(
+  "afterbegin",
+  produto2.mostrarDadosDestaque()
+);
+const produtosBasico3 = document.getElementById("lista-produtos");
+produtosBasico3.insertAdjacentHTML(
+  "afterbegin",
+  produto3.mostrarDadosDestaque()
+);
+const produtoDestaqueMostrar = document.getElementById("produto-destaque");
+produtoDestaqueMostrar.insertAdjacentHTML(
+  "afterbegin",
+  produtoDestaque.mostrarDados()
+);
